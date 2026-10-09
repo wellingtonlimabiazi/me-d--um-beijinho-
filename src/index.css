@@ -2,21 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: 'Comic Sans MS', system-ui, sans-serif;
-  background: linear-gradient(135deg, #ffe0f0 0%, #ffc0d9 50%, #ffb3d1 100%);
-  min-height: 100vh;
-  overflow-x: hidden;
+/* ====== RESET BÁSICO ====== */
+* {
+  -webkit-tap-highlight-color: transparent; /* remove aquele flash azul no celular */
+  box-sizing: border-box;
 }
 
-/* Corações flutuantes no fundo */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: 'Comic Sans MS', 'Segoe UI', system-ui, sans-serif;
+  background: linear-gradient(135deg, #ffe0f0 0%, #ffc0d9 50%, #ffb3d1 100%);
+  -webkit-font-smoothing: antialiased;
+  user-select: none; /* evita selecionar texto sem querer no celular */
+}
+
+/* ====== CORAÇÕES FLUTUANTES ====== */
 .floating-hearts {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
@@ -25,9 +33,9 @@ body {
 .floating-hearts span {
   position: absolute;
   bottom: -60px;
-  font-size: 24px;
   animation: floatUp 8s linear infinite;
   opacity: 0.6;
+  will-change: transform;
 }
 
 @keyframes floatUp {
@@ -45,4 +53,167 @@ body {
     transform: translateY(-110vh) rotate(360deg);
     opacity: 0;
   }
+}
+
+/* ====== ANIMAÇÕES ====== */
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.2); }
+}
+
+.animate-heart-beat {
+  animation: heart-beat 1.2s ease-in-out infinite;
+}
+
+/* ====== BOTÕES GRANDES E FÁCEIS DE TOCAR ====== */
+.btn-touch {
+  min-height: 60px;
+  min-width: 140px;
+  font-size: 1.25rem;
+  padding: 16px 32px;
+  border-radius: 9999px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .btn-touch {
+    min-height: 70px;
+    min-width: 160px;
+    font-size: 1.4rem;
+    padding: 18px 36px;
+  }
+}
+
+.btn-touch:active {
+  transform: scale(0.95);
+}
+
+/* ====== BOTÃO SIM (verde/rosa) ====== */
+.btn-yes {
+  background: linear-gradient(135deg, #ec4899 0%, #dc2626 100%);
+  color: white;
+  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.4);
+}
+
+.btn-yes:hover {
+  box-shadow: 0 12px 28px rgba(236, 72, 153, 0.6);
+}
+
+/* ====== BOTÃO NÃO (cinza) ====== */
+.btn-no {
+  background: #9ca3af;
+  color: white;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-no:hover {
+  background: #6b7280;
+}
+
+/* ====== TEXTO RESPONSIVO ====== */
+.title-main {
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 900;
+  color: #be185d;
+  text-shadow: 2px 2px 6px rgba(255, 255, 255, 0.8);
+  padding: 0 12px;
+}
+
+.title-sub {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 900;
+  color: #db2777;
+  text-shadow: 2px 2px 6px rgba(255, 255, 255, 0.8);
+  padding: 0 12px;
+}
+
+@media (min-width: 640px) {
+  .title-main { font-size: 3rem; }
+  .title-sub { font-size: 2.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .title-main { font-size: 3.5rem; }
+  .title-sub { font-size: 3rem; }
+}
+
+/* ====== URSO ====== */
+.bear {
+  font-size: 6rem;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  .bear { font-size: 8rem; }
+}
+
+@media (min-width: 1024px) {
+  .bear { font-size: 10rem; }
+}
+
+/* ====== CONTAINER CENTRAL ====== */
+.page-container {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  min-height: 100dvh; /* altura real em celular (com barra de endereço) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  text-align: center;
+}
+
+/* ====== BOTÕES: LADO A LADO no PC, EMPILHADOS no celular ====== */
+.buttons-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 24px;
+  width: 100%;
+  max-width: 500px;
+}
+
+@media (min-width: 640px) {
+  .buttons-wrap {
+    flex-direction: row;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+}
+
+/* ====== FOOTER ====== */
+.footer {
+  position: fixed;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #db2777;
+  opacity: 0.85;
+  padding: 0 16px;
+  z-index: 20;
 }
